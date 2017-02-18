@@ -1,0 +1,28 @@
+- hosts: node0
+  become_method: sudo
+  become_user: ubuntu
+  gather_facts: false
+ 
+  pre_tasks: 
+  - name: Install python
+    raw: sudo apt-get install -y python-simplejson
+  
+  - name: Update
+    raw: sudo apt-get update
+
+  - name: Installing essentials
+    raw: sudo apt-get install -y wget
+
+  tasks:
+ 
+  - name: Downloading Jenkins
+    raw: wget -q -O - http://pkg.jenkins.io/debian/jenkins-ci.org.key | sudo apt-key add -
+
+  - name: Unpacking Jenkins
+    raw:  sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+
+  - name: Updating repo cache
+    command: sudo apt-get update
+
+  - name: Installing Jenkins
+    command: sudo apt-get install -y jenkins

@@ -1,6 +1,6 @@
 - hosts: node0
-  become_method: sudo
-  become_user: ubuntu
+  sudo: yes
+  user: ubuntu
   gather_facts: false
  
   pre_tasks: 
@@ -26,3 +26,17 @@
 
   - name: Installing Jenkins
     command: sudo apt-get install -y jenkins
+
+  - name: Stopping Jenkins
+    command: sudo service jenkins stop
+  
+  - name: Creating directory
+    file: path=/var/lib/jenkins/init.groovy.d state=directory
+ 
+  - name: Updating security settings
+    copy:
+         src: ./jenkin_file/basic-security.groovy
+         dest: /var/lib/jenkins/init.groovy.d/basic-security.groovy
+
+  - name: Starting Jenkins
+    command: sudo service jenkins start

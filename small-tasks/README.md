@@ -1,5 +1,5 @@
 # Small Tasks
 
-#1 jen-ans 
+# jen-ans 
 
-Installing and Unlocking Jenkins using ansible
+	Installing and Unlocking Jenkins using ansible

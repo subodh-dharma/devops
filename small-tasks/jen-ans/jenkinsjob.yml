@@ -1,0 +1,15 @@
+ - hosts: all
+   sudo: yes
+   user: ubuntu
+   gather_facts: false
+
+   tasks:
+
+   - name: Creating temp directory structure
+     file: path=/home/ubuntu/tempjenkins state=directory
+
+   - name:  Downloading jenkins-cli.jar 
+     command: chdir=/home/ubuntu/tempjenkins wget http://localhost:8080/jnlpJars/jenkins-cli.jar
+
+   - name: Copying remote template file
+     copy: src=jenkin_file/config.xml dest=/home/ubuntu/tempjenkins
